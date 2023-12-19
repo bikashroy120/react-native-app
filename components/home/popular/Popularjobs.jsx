@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native'
 
 import styles from './popularjobs.style'
@@ -9,12 +9,18 @@ import useFetch from '../../../hook/useFetch'
 
 const Popularjobs = () => {
   const router = useRouter()
-
+  const [selectedJob, setSelectedJob] = useState();
   const { data, isLoading, error } = useFetch("search", {
     query: "React developer",
     page: '1',
     num_pages: '1'
   });
+
+
+  const handleCardPress = (item) => {
+    router.push(`/job-details/${item.job_id}`);
+    setSelectedJob(item.job_id);
+  };
 
   console.log(data)
 
@@ -36,7 +42,11 @@ const Popularjobs = () => {
               <FlatList
                 data={data?.data}
                 renderItem={({item})=>(
-                  <PopularJobCard item={item} />
+                  <PopularJobCard 
+                    item={item} 
+                    selectedJob={selectedJob}
+                    handleCardPress={handleCardPress}
+                    />
                 )} 
                 keyExtractor={item=>item.job_id}
                 contentContainerStyle={{columnGap:SIZES.medium}}

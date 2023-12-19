@@ -24,7 +24,7 @@ const Home = ()=>{
             />
 
             <ScrollView>
-                <View style={{flex:1,padding:SIZES.padding}}>
+                <View style={{flex:1,padding:SIZES.medium}}>
                     <Welcome/>
                     <Popularjobs/>
                     <Nearbyjobs/>
